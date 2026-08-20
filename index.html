@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wanaka Homepage — First-time clarity v2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="stage">
+  <div id="page">
+
+    <!-- ── Hero video (1920×800) ───────────────────────────── -->
+    <div class="hero">
+      <video class="hero-video is-active" data-label="Racing"  src="assets/video/homepage-hero-1920x800.mp4"          muted playsinline preload="auto"></video>
+      <video class="hero-video"           data-label="Building" src="assets/video/homepage-hero-building-1920x800.mp4" muted playsinline preload="auto"></video>
+      <video class="hero-video"           data-label="Combat"   src="assets/video/homepage-hero-combat-1920x800.mp4"   muted playsinline preload="auto"></video>
+      <div class="hero-fade"></div>
+    </div>
+
+    <!-- ── Ambient glow behind the CTA / footer ────────────── -->
+    <div class="glow">
+      <i style="top:6498px;height:1361px;background:#222B28;opacity:.6"></i>
+      <i style="top:6768px;height:1091px;background:#A35C14"></i>
+      <i style="top:7127px;height:807px; background:#73241D"></i>
+      <i style="top:7518px;height:619px; background:#1C1C1C"></i>
+    </div>
+
+    <!-- ── Header ─────────────────────────────────────────── -->
+    <header class="nav">
+      <a class="nav-logo" href="#"><img src="assets/img/logo-wanaka.png" alt="Wanaka"></a>
+      <nav class="nav-links">
+        <a href="#">How it works</a>
+        <a href="#">Templates</a>
+        <a href="#">Community</a>
+        <a href="#">Pricing</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="nav-signin" href="#">Sign in</a>
+        <a class="btn-white btn-white--sm" href="#">Start free</a>
+      </div>
+    </header>
+
+    <!-- ── Main container (starts at y=468) ───────────────── -->
+    <main class="main">
+
+      <!-- 1 · Hero copy + prompt -->
+      <section class="s-hero">
+        <h1 class="s-hero__title">Build a playable 3D game with AI.</h1>
+        <p class="s-hero__sub">Describe it, build it with AI, then share a browser link — no code required.</p>
+
+        <div class="prompt">
+          <div class="prompt__label">Cozy city builder</div>
+          <div class="prompt__row">
+            <img class="prompt__add" src="assets/svg/icon-add.svg" alt="">
+            <div class="prompt__create">
+              <img class="prompt__send" src="assets/svg/icon-send.svg" alt="">
+              <span>Create</span>
+            </div>
+          </div>
+        </div>
+        <div class="chips">
+          <div class="chip">Cozy city builder</div>
+          <div class="chip">Multiplayer obstacle course</div>
+          <div class="chip">Space survival adventure</div>
+        </div>
+      </section>
+
+      <!-- 2 · Studio -->
+      <section class="s-studio">
+        <h2 class="h-72">Build with AI. Stay in control.</h2>
+        <p class="p-16">Wanaka creates the first playable version while you direct the world, rules, assets, and details.</p>
+        <a class="btn-white" href="#">Open Studio<span class="ico-arrow"><i class="ico-arrow__line"></i><i class="ico-arrow__head"></i></span></a>
+        <div class="studio-shot"><img src="assets/img/studio-mock.png" alt="Wanaka Studio"></div>
+      </section>
+
+      <!-- 3 · Remix -->
+      <section class="s-remix">
+        <h2 class="s-remix__title">Play a world. Remix it into your own.</h2>
+        <div class="remix-row" id="remixRow1"></div>
+        <div class="remix-row" id="remixRow2"></div>
+      </section>
+
+      <!-- 4 · Features -->
+      <section class="s-features">
+        <h2 class="s-features__title">Everything you need to turn imagination into a game</h2>
+        <p class="s-features__sub">From your first idea to a playable world, Wanaka helps you create characters, environments, animations, and complete games with AI.</p>
+        <div class="feature-grid" id="featureGrid"></div>
+      </section>
+
+      <!-- 5 · Pricing -->
+      <section class="s-pricing">
+        <h2 class="h-72 s-pricing__title">Start making games for free</h2>
+        <p class="p-16 s-pricing__sub">Select the plan that best fits your needs</p>
+        <div class="billing">
+          <div class="billing__tab is-on">Monthly</div>
+          <div class="billing__tab">Yearly<span class="pill pill--max">2 months free</span></div>
+        </div>
+        <div class="plans" id="plans"></div>
+      </section>
+
+      <!-- 6 · Community -->
+      <section class="s-community">
+        <h2 class="h-72">Build alongside creators<br>making new worlds too.</h2>
+        <p class="p-16">Share works in progress, find collaborators, swap tips, and join community playtests.</p>
+        <a class="btn-white" href="#">Visit the community forum<span class="ico-arrow"><i class="ico-arrow__line"></i><i class="ico-arrow__head"></i></span></a>
+      </section>
+
+      <!-- 7 · FAQ -->
+      <section class="s-faq">
+        <h2 class="s-faq__title">Frequently asked<br>questions</h2>
+        <p class="p-16 s-faq__sub">Everything you need to know about creating games with Wanaka.</p>
+        <div class="faq-list" id="faqList"></div>
+        <div class="faq-more">See the full FAQ →</div>
+      </section>
+
+      <!-- 8 · CTA -->
+      <section class="s-cta">
+        <div class="cta-card">
+          <img class="cta-card__bg" src="assets/img/cta-bg.png" alt="">
+          <div class="cta-card__scrim"></div>
+          <div class="cta-card__body">
+            <div class="cta-card__stack">
+              <div class="cta-kicker">Your turn</div>
+              <h2 class="cta-title">Describe your game.<br>Play the first version.</h2>
+              <p class="cta-sub">Start with one sentence. Wanaka turns it into a playable 3D world.</p>
+            </div>
+            <a class="btn-white" href="#">Create your first game<span class="ico-arrow"><i class="ico-arrow__line"></i><i class="ico-arrow__head"></i></span></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9 · Footer -->
+      <footer class="s-footer">
+        <div class="foot-left">
+          <img class="foot-logo" src="assets/img/logo-wanaka-footer.png" alt="Wanaka">
+          <div class="foot-copy">© 2026 Wanaka Studio Limited. All rights reserved.</div>
+        </div>
+        <div class="foot-cols">
+          <div class="foot-col">
+            <div class="foot-col__label">PRODUCT</div>
+            <div class="foot-col__links"><a href="#">Pricing</a><a href="#">Terms of Service</a><a href="#">Privacy Policy</a><a href="#">Refund Policy</a><a href="#">Open Studio</a></div>
+          </div>
+          <div class="foot-col">
+            <div class="foot-col__label">COMMUNITY</div>
+            <div class="foot-col__links"><a href="#">X</a><a href="#">YouTube</a><a href="#">LinkedIn</a><a href="#">Instagram</a><a href="#">TikTok</a></div>
+          </div>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+</div>
+
+<!-- demo shell (not part of the design) -->
+<div id="hud">
+  <div id="hudTrack"></div>
+  <div id="hudRow">
+    <button data-i="0">Racing</button>
+    <button data-i="1">Building</button>
+    <button data-i="2">Combat</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
