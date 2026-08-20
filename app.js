@@ -22,6 +22,7 @@
     const to   = videos[next];
 
     // the incoming clip enters frozen on frame 0 — that's what fades in
+    if (to.preload !== 'auto') { to.preload = 'auto'; to.load(); }
     to.pause();
     to.currentTime = 0;
     to.classList.add('is-active');
@@ -70,7 +71,21 @@
   buttons[0].classList.add('is-on');
   schedule(0);
 
+  // only the first clip blocks the initial render; pull the rest down once the
+  // page is up, so a four-clip reel doesn't cost 13 MB before first paint
+  const warm = () => videos.slice(1).forEach(v => {
+    if (v.preload !== 'auto') { v.preload = 'auto'; v.load(); }
+  });
+  if (document.readyState === 'complete') setTimeout(warm, 400);
+  else window.addEventListener('load', () => setTimeout(warm, 400), {once:true});
+
   buttons.forEach((b,i) => b.addEventListener('click', () => show(i, {user:true})));
+
+  // a hidden tab throttles timers and suspends playback, which desyncs the
+  // reel — restart the current clip cleanly whenever the page comes back
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) schedule(0);
+  });
 
   // browsers that block autoplay until a gesture
   document.addEventListener('click', () => videos[index].play().catch(()=>{}), {once:true});

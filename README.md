@@ -23,6 +23,7 @@ as `wanaka-homepage`.)
 - `assets/video/homepage-hero-1920x800.mp4` → **Racing**
 - `assets/video/homepage-hero-building-1920x800.mp4` → **Building**
 - `assets/video/homepage-hero-combat-1920x800.mp4` → **Combat**
+- `assets/video/homepage-hero-parkour-1920x800.mp4` → **Parkour**
 
 Each clip is ~5.0 s. Per cycle (~6.0 s):
 
@@ -35,6 +36,12 @@ Each clip is ~5.0 s. Per cycle (~6.0 s):
 Only the visible clip plays; the others are paused and rewound to 0. Tune
 `FADE`, `FIRST_HOLD` and `MIN_PLAY` at the top of `app.js` (`FADE` must stay in
 sync with the `.hero-video` transition in `styles.css`).
+
+Adding a clip means one `<video class="hero-video" data-label="…">` in
+`index.html` plus a matching `#hudRow` button — the reel reads its length from
+the DOM. Only the first clip carries `preload="auto"`; the rest start at
+`preload="none"` and are fetched 400 ms after `window.load`, so a four-clip
+reel doesn't cost 13 MB before first paint.
 
 The floating panel bottom-right is **demo chrome, not part of the design**: a
 progress bar for the current clip plus manual buttons. Delete `#hud` from
