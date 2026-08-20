@@ -7,7 +7,9 @@ The three frames in that Figma section are the same page with three different
 hero clips, so this demo folds them into one page whose **hero video
 auto-switches** — which is the point of the demo.
 
-## Run
+**Live demo → <https://belendali.github.io/wanaka-homepage-hero-reel/>**
+
+## Run locally
 
 ```bash
 python3 -m http.server 8461 --directory ~/wanaka-homepage-demo
