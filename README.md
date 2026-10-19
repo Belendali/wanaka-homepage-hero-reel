@@ -20,12 +20,23 @@ as `wanaka-homepage`.)
 
 ## Hero video reel
 
-- `assets/video/homepage-hero-1920x800.mp4` → **Racing**
-- `assets/video/homepage-hero-building-1920x800.mp4` → **Building**
-- `assets/video/homepage-hero-combat-1920x800.mp4` → **Combat**
-- `assets/video/homepage-hero-parkour-1920x800.mp4` → **Parkour**
+| # | clip | file | source size |
+|---|---|---|---|
+| 1 | Racing | `homepage-hero-1920x800.mp4` | 1920×800 |
+| 2 | Combat | `homepage-hero-combat-1920x800.mp4` | 1920×800 |
+| 3 | Forest | `homepage-hero-forest-1472x608.mp4` | 1472×608 |
+| 4 | Graveyard | `homepage-hero-graveyard-1472x608.mp4` | 1472×608 |
+| 5 | Building | `homepage-hero-building-1920x800.mp4` | 1920×800 |
+| 6 | Fishing | `homepage-hero-fishing-1920x800.mp4` | 1920×800 |
+| 7 | Sushi | `homepage-hero-sushi-1920x800.mp4` | 1920×800 |
+| 8 | Cavern | `homepage-hero-cavern-1472x608.mp4` | 1472×608 |
 
-Each clip is ~5.0 s. Per cycle (~6.0 s):
+`homepage-hero-parkour-1920x800.mp4` is still in the folder but out of the
+rotation. The 1472×608 clips are 2.42:1 against the hero's 2.40:1, so
+`object-fit: cover` trims under 1 % off the sides; they do upscale to fill
+1920×800, which is visible on a large display.
+
+Clips are 5.0 s or 6.0 s; the reel reads each one's own duration. Per cycle:
 
 1. The incoming clip enters **frozen on frame 0** and fades up over 900 ms.
 2. It stays frozen on that first frame for another **500 ms** at full opacity,
@@ -38,10 +49,15 @@ Only the visible clip plays; the others are paused and rewound to 0. Tune
 sync with the `.hero-video` transition in `styles.css`).
 
 Adding a clip means one `<video class="hero-video" data-label="…">` in
-`index.html` plus a matching `#hudRow` button — the reel reads its length from
-the DOM. Only the first clip carries `preload="auto"`; the rest start at
-`preload="none"` and are fetched 400 ms after `window.load`, so a four-clip
-reel doesn't cost 13 MB before first paint.
+`index.html` plus a matching `#hudRow` button — the reel reads its length and
+order from the DOM. Reordering is just moving those two lines.
+
+Only the first clip carries `preload="auto"`. The rest start at
+`preload="none"` and are pulled down `LOOKAHEAD` clips ahead of wherever the
+reel is, so eight clips never cost 43 MB on first paint — one rotation caches
+everything. A switch also refuses to cut to a clip with no decoded frame yet;
+it holds the clip that's up and retries, so a slow connection stalls on a real
+frame instead of blanking the hero.
 
 The floating panel bottom-right is **demo chrome, not part of the design**: a
 progress bar for the current clip plus manual buttons. Delete `#hud` from

@@ -306,7 +306,7 @@ img{display:block}
 }
 #hudTrack{height:3px;border-radius:2px;background:rgba(255,255,255,.15);overflow:hidden;margin-bottom:9px}
 #hudTrack i{display:block;height:100%;width:0;background:#5ce979}
-#hudRow{display:flex;gap:6px}
+#hudRow{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;max-width:330px}
 #hudRow button{
   all:unset;cursor:pointer;padding:5px 10px;border-radius:8px;
   background:rgba(255,255,255,.07);color:rgba(255,255,255,.6);

@@ -14,15 +14,28 @@
   const FADE       = 900;   // crossfade — must match .hero-video transition
   const FIRST_HOLD = 500;   // sit on the incoming clip's first frame this long
   const MIN_PLAY   = 1800;  // floor, in case a clip is very short
-  let index = 0, fadeTimer = null, playTimer = null, nextTimer = null;
+  const LOOKAHEAD  = 3;     // how many clips ahead to have downloaded
+  let index = 0, pending = 0;
+  let fadeTimer = null, playTimer = null, nextTimer = null;
 
   function show(next, {user = false} = {}){
     if (next === index && !user) return;
-    const from = videos[index];
-    const to   = videos[next];
+    const from  = videos[index];
+    const to    = videos[next];
+    const token = ++pending;
+
+    warm(to);
+
+    // Never cut to a clip that has no frame decoded yet — on a slow connection
+    // that blanks the hero for the whole freeze. Hold the clip that's up
+    // (parked on its last frame) and try again in a moment instead.
+    if (to.readyState < 2) {
+      clearTimeout(nextTimer);
+      nextTimer = setTimeout(() => { if (token === pending) show(next, {user}); }, 300);
+      return;
+    }
 
     // the incoming clip enters frozen on frame 0 — that's what fades in
-    if (to.preload !== 'auto') { to.preload = 'auto'; to.load(); }
     to.pause();
     to.currentTime = 0;
     to.classList.add('is-active');
@@ -47,6 +60,8 @@
     v.pause();
     v.currentTime = 0;
 
+    warmAhead();
+
     const run = () => {
       const dur     = isFinite(v.duration) && v.duration > 0 ? v.duration * 1000 : 8000;
       const freeze  = fadeIn + FIRST_HOLD;             // frame 0 held this long
@@ -67,17 +82,18 @@
     else v.addEventListener('loadedmetadata', run, {once:true});
   }
 
+  // Only the first clip blocks the initial render. The rest start at
+  // preload="none" and are pulled down a couple of clips ahead of where the
+  // reel is, so a long reel never dumps its whole payload on the first paint —
+  // by the end of one rotation everything is cached anyway.
+  function warm(v){ if (v && v.preload !== 'auto') { v.preload = 'auto'; v.load(); } }
+  function warmAhead(){
+    for (let k = 1; k <= LOOKAHEAD; k++) warm(videos[(index + k) % videos.length]);
+  }
+
   videos.forEach(v => { v.loop = false; v.muted = true; v.pause(); v.currentTime = 0; });
   buttons[0].classList.add('is-on');
   schedule(0);
-
-  // only the first clip blocks the initial render; pull the rest down once the
-  // page is up, so a four-clip reel doesn't cost 13 MB before first paint
-  const warm = () => videos.slice(1).forEach(v => {
-    if (v.preload !== 'auto') { v.preload = 'auto'; v.load(); }
-  });
-  if (document.readyState === 'complete') setTimeout(warm, 400);
-  else window.addEventListener('load', () => setTimeout(warm, 400), {once:true});
 
   buttons.forEach((b,i) => b.addEventListener('click', () => show(i, {user:true})));
 
